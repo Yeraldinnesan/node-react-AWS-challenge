@@ -9,7 +9,7 @@ async function connectDB() {
     await connect(MONGODB_URI);
     console.log("Conencted to MongoDB Atlas");
   } catch (error) {
-    console.error(error);
+    console.error("Failed to connect to MongoDB", error);
   }
 }
 
