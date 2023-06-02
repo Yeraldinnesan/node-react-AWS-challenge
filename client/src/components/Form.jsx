@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Input, Select, initTE } from "tw-elements";
 import { getCountries, getCities, getStates } from "../utils/api";
+import { formValidation } from "../utils/formValidations";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,8 @@ const Form = () => {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   // console.log("stateeeeeeeeee", states);
+
+  const [errors, setErrors] = useState({});
 
   const pobChangeHandler = async (name, e) => {
     setFormData((prevData) => ({
@@ -61,11 +64,25 @@ const Form = () => {
     fetchCountries();
   }, []);
 
+  const onClickHandler = (e) => {
+    e.preventDefault();
+    const validationErrors = formValidation(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      setErrors({});
+    }
+  };
+
+  // const onSubmitHandler = (e) => {
+
+  // };
+
   return (
     <div>
       {console.log(formData)}
       <form className="w-ful ">
-        <div className="relative mb-3" data-te-input-wrapper-init>
+        <div className="relative mb-" data-te-input-wrapper-init>
           <input
             type="text"
             name="fullName"
@@ -79,12 +96,15 @@ const Form = () => {
             }
           />
           <label className="label-class">
-            <span className="text-red-500">*</span> Enter your full name
+            <span className="text-red-500">*</span> Full name
           </label>
         </div>
+        {errors.fullName && (
+          <p className="text-red-700 px-3">{errors.fullName}</p>
+        )}
         <h1 className="font-bold text-lg py-2">Place of birth:</h1>
         {/*  */}
-        <div className="mb-4">
+        <div className="mt-2">
           <select
             data-te-select-init
             name="country"
@@ -101,8 +121,11 @@ const Form = () => {
           <label data-te-select-label-ref>
             <span className="text-red-500">*</span> Select a Country
           </label>
+          {errors.country && (
+            <p className="text-red-700 px-3">{errors.country}</p>
+          )}
         </div>
-        <div className="my-4">
+        <div className="mt-4">
           <select
             data-te-select-init
             name="state"
@@ -120,7 +143,8 @@ const Form = () => {
             <span className="text-red-500">*</span> Select a State
           </label>
         </div>
-        <div className="my-4">
+        {errors.state && <p className="text-red-700 px-3">{errors.state}</p>}
+        <div className="mt-4">
           <select
             data-te-select-init
             name="city"
@@ -138,6 +162,13 @@ const Form = () => {
             <span className="text-red-500">*</span> Select a City
           </label>
         </div>
+        {errors.city && <p className="text-red-700 px-3">{errors.city}</p>}
+        <button
+          onClick={onClickHandler}
+          className="w-full bg-slate-600 py-2 px-3 mt-6 rounded-md"
+        >
+          Send
+        </button>
       </form>
     </div>
   );
