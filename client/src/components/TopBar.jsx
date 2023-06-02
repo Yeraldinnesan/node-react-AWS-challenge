@@ -2,7 +2,7 @@ import { RxLinkedinLogo, RxGithubLogo } from "react-icons/rx";
 
 const TopBar = () => {
   return (
-    <div className="flex justify-between items-center md:px-32 py-5 px-5 bg-fuchsia-200">
+    <div className="flex justify-between items-center lg:py-5 py-5 lg:px-32 px-5 bg-zinc-700">
       <div className="font-bold text-xl">Yeraldinne Sanabria</div>
       <div className="flex gap-5">
         <a
