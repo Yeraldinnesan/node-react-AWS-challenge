@@ -1,19 +1,10 @@
 import axios from "axios";
-import { API_TOKEN, API_EMAIL } from "../../../config.js";
+import { getApiToken } from "../../utils/apiToken.js";
 
 export const getCountries = async (req, res) => {
   try {
     // Authorization token
-    const authUrl = "https://www.universal-tutorial.com/api/getaccesstoken";
-    const authHeaders = {
-      Accept: "application/json",
-      "api-token": API_TOKEN,
-      "user-email": API_EMAIL,
-    };
-
-    const authResponse = await axios.get(authUrl, { headers: authHeaders });
-    const authToken = authResponse.data.auth_token;
-    console.log(authToken);
+    const authToken = await getApiToken();
 
     // Get the countries with the token
     const countriesUrl = "https://www.universal-tutorial.com/api/countries";
@@ -22,7 +13,7 @@ export const getCountries = async (req, res) => {
       Accept: "application/json",
     };
 
-    const countriesRes = await axios.get(countriesUrl, {
+    const countriesRes = await axios(countriesUrl, {
       headers: countriesHeaders,
     });
     const countries = countriesRes.data;
