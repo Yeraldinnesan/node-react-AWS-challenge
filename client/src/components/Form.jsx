@@ -107,7 +107,7 @@ const Form = () => {
       {console.log(formData)}
       <form
         onSubmit={onSubmitHandler}
-        className="w-full pb-5 px-2 max-h-96 "
+        className="w-full pb-5 px-2 "
         style={{ maxHeight: "400px" }}
       >
         <div className="relative " data-te-input-wrapper-init>
@@ -128,9 +128,9 @@ const Form = () => {
           </label>
         </div>
         {errors.fullName && (
-          <p className="text-red-700 px-3">{errors.fullName}</p>
+          <p className="text-red-700 text-sm px-3">{errors.fullName}</p>
         )}
-        <h1 className="font-medium text-lg py-2">Place of birth:</h1>
+        <h1 className="font-medium text-lg mt-3 py-2">Place of birth:</h1>
         {/*  */}
         <div className="mt-2">
           <select
@@ -150,7 +150,7 @@ const Form = () => {
             <span className="text-red-500">*</span> Select a Country
           </label>
           {errors.country && (
-            <p className="text-red-700 px-3">{errors.country}</p>
+            <p className="text-red-700 text-sm px-3">{errors.country}</p>
           )}
         </div>
         <div className="mt-4">
@@ -171,7 +171,9 @@ const Form = () => {
             <span className="text-red-500">*</span> Select a State
           </label>
         </div>
-        {errors.state && <p className="text-red-700 px-3">{errors.state}</p>}
+        {errors.state && (
+          <p className="text-red-700 text-sm px-3">{errors.state}</p>
+        )}
         <div className="mt-4">
           <select
             data-te-select-init
@@ -190,7 +192,9 @@ const Form = () => {
             <span className="text-red-500">*</span> Select a City
           </label>
         </div>
-        {errors.city && <p className="text-red-700 px-3">{errors.city}</p>}
+        {errors.city && (
+          <p className="text-red-700 text-sm px-3">{errors.city}</p>
+        )}
         <button
           onClick={onClickHandler}
           className=" flex gap-2 hover:bg-slate-600 justify-center items-center  w-full bg-slate-700 py-2 shadow-md shadow-neutral-900 px-3 mt-6 rounded-md ease-in-out  duration-200"
