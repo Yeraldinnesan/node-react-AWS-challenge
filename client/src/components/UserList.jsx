@@ -34,16 +34,18 @@ const UserList = () => {
           <FiLoader />
         </div>
       ) : (
-        <div className="grid  grid-cols-1  gap-3 ">
-          {users?.map((el) => (
-            <div key={el._id}>
-              <UserItem user={el} />
+        <div>
+          <div className="grid  grid-cols-1  gap-3 ">
+            {users?.map((el) => (
+              <div key={el._id}>
+                <UserItem user={el} />
+              </div>
+            ))}
+            <div onClick={handleReload}>
+              <button className=" flex gap-2 hover:bg-slate-600 justify-center items-center  w-full bg-slate-700 py-3 shadow-md shadow-neutral-900 px-3 mt-6 rounded-md ease-in-out  duration-200">
+                <AiOutlineReload className="text-xl font-extrabold" />
+              </button>
             </div>
-          ))}
-          <div onClick={handleReload}>
-            <button className=" flex gap-2 hover:bg-slate-600 justify-center items-center  w-full bg-slate-700 py-3 shadow-md shadow-neutral-900 px-3 mt-6 rounded-md ease-in-out  duration-200">
-              <AiOutlineReload className="text-xl font-extrabold" />
-            </button>
           </div>
         </div>
       )}
