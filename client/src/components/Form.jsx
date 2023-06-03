@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { Input, Select, initTE } from "tw-elements";
-import { getCountries, getCities, getStates } from "../utils/api";
+import { getCountries, getCities, getStates, createUser } from "../utils/api";
 import { formValidation } from "../utils/formValidations";
+
+import { HiUserAdd } from "react-icons/hi";
+import Swal from "sweetalert2";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -64,8 +67,7 @@ const Form = () => {
     fetchCountries();
   }, []);
 
-  const onClickHandler = (e) => {
-    e.preventDefault();
+  const onClickHandler = () => {
     const validationErrors = formValidation(formData);
     setErrors(validationErrors);
 
@@ -74,15 +76,41 @@ const Form = () => {
     }
   };
 
-  // const onSubmitHandler = (e) => {
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    if (formData) {
+      const errors = formValidation(formData);
+      setErrors(errors);
 
-  // };
+      if (Object.keys(errors).length === 0) {
+        createUser(formData);
+        console.log("formData");
+        setFormData({
+          fullName: "",
+          placeOfBirth: {
+            country: "",
+            state: "",
+            city: "",
+          },
+        });
+        Swal.fire("Added!!!", "User added successfully", "success");
+        console.log("user created");
+      }
+    } else {
+      Swal.fire("Opps!!!", "All fields are required!", "error");
+      console.log("user created");
+    }
+  };
 
   return (
     <div>
       {console.log(formData)}
-      <form className="w-ful ">
-        <div className="relative mb-" data-te-input-wrapper-init>
+      <form
+        onSubmit={onSubmitHandler}
+        className="w-full pb-5 px-2 max-h-96 "
+        style={{ maxHeight: "400px" }}
+      >
+        <div className="relative " data-te-input-wrapper-init>
           <input
             type="text"
             name="fullName"
@@ -102,7 +130,7 @@ const Form = () => {
         {errors.fullName && (
           <p className="text-red-700 px-3">{errors.fullName}</p>
         )}
-        <h1 className="font-bold text-lg py-2">Place of birth:</h1>
+        <h1 className="font-medium text-lg py-2">Place of birth:</h1>
         {/*  */}
         <div className="mt-2">
           <select
@@ -165,9 +193,12 @@ const Form = () => {
         {errors.city && <p className="text-red-700 px-3">{errors.city}</p>}
         <button
           onClick={onClickHandler}
-          className="w-full bg-slate-600 py-2 px-3 mt-6 rounded-md"
+          className=" flex gap-2 hover:bg-slate-600 justify-center items-center  w-full bg-slate-700 py-2 shadow-md shadow-neutral-900 px-3 mt-6 rounded-md ease-in-out  duration-200"
         >
-          Send
+          Add
+          <span>
+            <HiUserAdd />
+          </span>
         </button>
       </form>
     </div>
